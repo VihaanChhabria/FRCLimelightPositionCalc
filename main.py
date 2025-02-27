@@ -8,7 +8,7 @@ def inchesToMeters(inch: float) -> float:
 def degToRad(deg: float) -> float:
     return deg * (math.pi / 180)
 
-def translatePose(originalPose:dict[str, float], degreesRotate: double, distance: double) -> dict[str, float]:
+def translatePose(originalPose:dict[str, float], degreesRotate: float, distance: float) -> dict[str, float]:
     newXCoord: float = originalPose["x"] + (math.cos(degToRad(degreesRotate)) * distance);
     newYCoord: float = originalPose["y"] + (math.sin(degToRad(degreesRotate)) * distance);
 
