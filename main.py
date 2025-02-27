@@ -47,7 +47,7 @@ limelightPoseX: float = float(input("What is the X value that the limelight thin
 limelightPoseY: float = float(input("What is the Y value that the limelight thinks the robot is? (m): "))
 limelightPoseRotation: float = float(input("What is the rotation value that the limelight thinks the robot is? (rad): "))
 
-realPose: dict[str, float] = translatePose(TAG_POSES[tagID], TAG_POSES[tagID]["rotation"], realDistanceFromTag)
+realPose: dict[str, float] = translatePose(TAG_POSES[tagID], TAG_POSES[tagID]["rotation"], realDistanceFromTag / 2)
 
 offsetX: float = limelightPoseX-realPose['x']
 offsetY: float = limelightPoseY-realPose['y']
