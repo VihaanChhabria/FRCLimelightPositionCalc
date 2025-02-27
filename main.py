@@ -8,6 +8,12 @@ def inchesToMeters(inch: float) -> float:
 def degToRad(deg: float) -> float:
     return deg * (math.pi / 180)
 
+def translatePose(originalPose:dict[str, float], degreesRotate: double, distance: double) -> dict[str, float]:
+    newXCoord: float = originalPose["x"] + (math.cos(degToRad(degreesRotate)) * distance);
+    newYCoord: float = originalPose["y"] + (math.sin(degToRad(degreesRotate)) * distance);
+
+    return {"x": newXCoord, "y": newYCoord, "rotation": originalPose['rotation']}
+
 # Dictionary to hold the positions of the April tags
 TAG_POSES = {
     1: {'x': inchesToMeters(657.37), 'y': inchesToMeters(25.8), 'rotation': degToRad(126 + 180)},
@@ -36,5 +42,17 @@ TAG_POSES = {
 
 print("Place your robot straight in front of an April tag about 1-2 meters away. You want your limelight to see the April tag.")
 tagID: int = int(input("What April tag ID are you using?: "))
-realDistanceFromTag: float = float(input("How far away is the robot (m): "))
+realDistanceFromTag: float = float(input("How far away is the robot center (m): "))
+limelightPoseX: float = float(input("What is the X value that the limelight thinks the robot is? (m): "))
+limelightPoseY: float = float(input("What is the Y value that the limelight thinks the robot is? (m): "))
+limelightPoseRotation: float = float(input("What is the rotation value that the limelight thinks the robot is? (rad): "))
 
+realPose: dict[str, float] = translatePose(TAG_POSES[tagID], TAG_POSES[tagID]["rotation"], realDistanceFromTag)
+
+offsetX: float = limelightPoseX-realPose['x']
+offsetY: float = limelightPoseY-realPose['y']
+offsetRotation: float = limelightPoseRotation-realPose['rotation']
+
+print("Offset X: ", offsetX)
+print("Offset Y: ", offsetY)
+print("Offset Rotation: ", offsetRotation)
